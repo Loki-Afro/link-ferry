@@ -6,7 +6,7 @@ The Gradle wrapper assembled a signed debug APK. The URL validation tests cover 
 
 ## Android compatibility
 
-The manifest declares exported, browsable `ACTION_VIEW` handling for HTTP and HTTPS without a host restriction. Browser discovery queries web handlers using package visibility declarations, requires support for both schemes, and excludes Redirector. The setup screen requests the browser role using Android’s confirmation UI. Android and its Permission Controller evaluate role eligibility on each device.
+The manifest declares exported, browsable `ACTION_VIEW` handling for HTTP and HTTPS without a host restriction. Browser discovery queries web handlers using package visibility declarations, requires support for both schemes, and excludes LinkFerry. The setup screen requests the browser role using Android’s confirmation UI. Android and its Permission Controller evaluate role eligibility on each device.
 
 | Android version | API | Runtime coverage |
 | --- | --- | --- |
@@ -25,11 +25,11 @@ Run with a second browser installed where the case calls for one. Use a test URL
 
 | Case | Steps and expected outcome |
 | --- | --- |
-| Browser discovery with a default set | Install Chrome, Firefox and DuckDuckGo in the same Android profile. Set Chrome as the system default, then open Redirector’s browser picker. All three browsers should appear. Repeat after setting Redirector as the system default and check that Redirector itself stays out of the picker. |
-| Onboarding | Pick a browser, agree to the Android role prompt, reopen Redirector and confirm both statuses. Repeat after declining the prompt and after changing the default in Android settings. |
+| Browser discovery with a default set | Install Chrome, Firefox and DuckDuckGo in the same Android profile. Set Chrome as the system default, then open LinkFerry’s browser picker. All three browsers should appear. Repeat after setting LinkFerry as the system default and check that LinkFerry itself stays out of the picker. |
+| Onboarding | Pick a browser, agree to the Android role prompt, reopen LinkFerry and confirm both statuses. Repeat after declining the prompt and after changing the default in Android settings. |
 | Ordinary web link | Tap an HTTP URL and an HTTPS URL from a separate app. Verify the selected browser opens and receives the original path, query and fragment. Try a test URL containing an escaped slash and repeated query keys. |
-| Back and task navigation | Repeat with the browser cold, running and foregrounded. Open multiple distinct links. Check Back, Recents, and link delivery when Redirector is backgrounded. Try tapping a link after unlocking the phone. |
-| Missing browser | Disable or uninstall the preferred browser and tap a normal link. Verify the one-time browser picker or the configuration action appears. Confirm Redirector never appears as a target. |
+| Back and task navigation | Repeat with the browser cold, running and foregrounded. Open multiple distinct links. Check Back, Recents, and link delivery when LinkFerry is backgrounded. Try tapping a link after unlocking the phone. |
+| Missing browser | Disable or uninstall the preferred browser and tap a normal link. Verify the one-time browser picker or the configuration action appears. Confirm LinkFerry never appears as a target. |
 | Invalid input | Explicitly invoke the exported link entry with a missing URL, an invalid HTTP URI and a disallowed scheme. Verify the activity finishes safely. |
 | Verified App Link | Tap a known verified link and record which domain-associated app Android launches. |
 | Explicit Custom Tab | Open a link from an app that names a Custom Tabs provider. Check whether the provider starts directly or the caller falls back to ordinary link routing. |
@@ -46,7 +46,7 @@ adb shell 'am start -a android.intent.action.VIEW -c android.intent.category.BRO
 | Path | Physical-device result |
 | --- | --- |
 | Signal message link | Pending. The public conversation code sends ordinary message URLs and link previews through an unscoped `ACTION_VIEW`. Signal handles some links itself, including Signal group and proxy links. Verify the specific message tap in the installed version. [Signal ConversationFragment](https://github.com/signalapp/Signal-Android/blob/8959dc6e1329f882951b16ae87e22e60d1c11516/app/src/main/java/org/thoughtcrime/securesms/conversation/v2/ConversationFragment.kt#L1377) |
-| OsmAnd general external link | Pending. One public path creates a Custom Tabs intent without selecting a package at that call site. Test which activity Android launches with Redirector as the default. [OsmAnd AndroidUtils.openUrl](https://github.com/osmandapp/OsmAnd/blob/master/OsmAnd/src/net/osmand/plus/utils/AndroidUtils.java) |
+| OsmAnd general external link | Pending. One public path creates a Custom Tabs intent without selecting a package at that call site. Test which activity Android launches with LinkFerry as the default. [OsmAnd AndroidUtils.openUrl](https://github.com/osmandapp/OsmAnd/blob/master/OsmAnd/src/net/osmand/plus/utils/AndroidUtils.java) |
 | OsmAnd Wikipedia article | Pending. The [Wikipedia WebView client](https://github.com/osmandapp/OsmAnd/blob/master/OsmAnd/src/net/osmand/plus/wikipedia/WikipediaWebViewClient.java) has in-app navigation paths. |
 | OsmAnd Wikipedia external link | Pending. Accepting the warning invokes the same Custom Tabs helper. Test the warning and which activity Android launches afterward. [OsmAnd WikiArticleHelper](https://github.com/osmandapp/OsmAnd/blob/master/OsmAnd/src/net/osmand/plus/wikipedia/WikiArticleHelper.java#L108) |
 

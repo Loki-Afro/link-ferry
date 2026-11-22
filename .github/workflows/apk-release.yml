@@ -35,7 +35,7 @@ jobs:
 
       - uses: actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131 # v7
         with:
-          name: browser-redirector-debug
+          name: link-ferry-debug
 
       - name: Publish APK on GitHub Releases
         env:
@@ -43,7 +43,7 @@ jobs:
           GH_REPO: ${{ github.repository }}
         run: |
           tag="$GITHUB_REF_NAME"
-          asset="browser-redirector-$tag-debug.apk"
+          asset="link-ferry-$tag-debug.apk"
           mv app-debug.apk "$asset"
 
           if gh release view "$tag" --json assets > "$RUNNER_TEMP/release-assets.json"; then

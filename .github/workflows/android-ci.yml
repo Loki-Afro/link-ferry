@@ -49,7 +49,7 @@ jobs:
           DEBUG_KEYSTORE_BASE64: ${{ secrets.debug_keystore }}
         run: |
           if [[ -n "$DEBUG_KEYSTORE_BASE64" ]]; then
-            android_user_home="$RUNNER_TEMP/redirector-android"
+            android_user_home="$RUNNER_TEMP/link-ferry-android"
             install -d -m 700 "$android_user_home"
             umask 077
             printf '%s' "$DEBUG_KEYSTORE_BASE64" | base64 --decode > "$android_user_home/debug.keystore"
@@ -69,6 +69,6 @@ jobs:
 
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: browser-redirector-debug
+          name: link-ferry-debug
           path: app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error

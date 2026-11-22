@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Android Browser Redirector"
+rootProject.name = "LinkFerry"
 include(":app")
