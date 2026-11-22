@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Browser Redirector</string>
+    <string name="description">Choose the browser that opens web links sent to Browser Redirector.</string>
+    <string name="preferred_browser">Preferred browser</string>
+    <string name="no_preference">No browser selected</string>
+    <string name="browser_unavailable">Preferred browser is unavailable</string>
+    <string name="default_browser">System default browser</string>
+    <string name="default_active">Browser Redirector</string>
+    <string name="default_inactive">Another app or no default</string>
+    <string name="default_unavailable">Browser role is unavailable</string>
+    <string name="choose_browser">Choose browser</string>
+    <string name="make_default">Set as default browser</string>
+    <string name="open_defaults">Open default app settings</string>
+    <string name="enable_after_selection">Choose a browser to enable setup.</string>
+    <string name="support_note">Android routes some links directly to their associated apps. Apps can also open links in their own WebView or a Custom Tab.</string>
+    <string name="no_browsers">Install or enable a browser that can open HTTP and HTTPS links.</string>
+    <string name="open_once">Open with a browser this time</string>
+    <string name="open_settings">Open Redirector settings</string>
+    <string name="invalid_link">This is not a valid HTTP or HTTPS link.</string>
+    <string name="cannot_open">The browser could not open this link.</string>
+    <string name="cannot_open_settings">Android could not open default app settings.</string>
+</resources>
