@@ -2,7 +2,7 @@
 
 ## Build checks
 
-The Gradle wrapper assembled a signed debug APK. The URL validation tests cover escaped paths, repeated query keys, fragments, IPv6, internationalized domains, malformed URLs and unsupported schemes. The APK signature and packaged manifest were checked with Android SDK tools.
+The Gradle wrapper assembled a signed debug APK. The URL validation tests cover escaped paths, repeated query keys, fragments, IPv6, internationalized domains, malformed URLs and unsupported schemes. Android lint found no errors and flagged the pinned Android Gradle Plugin version as older than the latest release. The APK signature and packaged manifest were checked with Android SDK tools.
 
 ## Android compatibility
 
@@ -10,6 +10,7 @@ The manifest declares exported, browsable `ACTION_VIEW` handling for HTTP and HT
 
 | Android version | API | Runtime coverage |
 | --- | --- | --- |
+| Android 10 | 29 | Device or emulator run pending |
 | Android 12 | 31 | Device or emulator run pending |
 | Android 14 | 34 | Device or emulator run pending |
 | Android 15 | 35 | Device or emulator run pending |
@@ -41,10 +42,10 @@ adb shell 'am start -a android.intent.action.VIEW -c android.intent.category.BRO
 
 | Path | Physical-device result |
 | --- | --- |
-| Signal message link | Pending. Signal’s public browser-link helper uses an unscoped `ACTION_VIEW`, which Android can route to the default browser. Verify the specific message tap in the installed version. [Signal LinkActions](https://github.com/signalapp/Signal-Android/blob/8959dc6e1329f882951b16ae87e22e60d1c11516/core/util/src/main/java/org/signal/core/util/LinkActions.kt) |
+| Signal message link | Pending. The public conversation code sends ordinary message URLs and link previews through an unscoped `ACTION_VIEW`. Signal handles some links itself, including Signal group and proxy links. Verify the specific message tap in the installed version. [Signal ConversationFragment](https://github.com/signalapp/Signal-Android/blob/8959dc6e1329f882951b16ae87e22e60d1c11516/app/src/main/java/org/thoughtcrime/securesms/conversation/v2/ConversationFragment.kt#L1377) |
 | OsmAnd general external link | Pending. One public path creates a Custom Tabs intent without selecting a package at that call site. Test which activity Android launches with Redirector as the default. [OsmAnd AndroidUtils.openUrl](https://github.com/osmandapp/OsmAnd/blob/master/OsmAnd/src/net/osmand/plus/utils/AndroidUtils.java) |
 | OsmAnd Wikipedia article | Pending. The [Wikipedia WebView client](https://github.com/osmandapp/OsmAnd/blob/master/OsmAnd/src/net/osmand/plus/wikipedia/WikipediaWebViewClient.java) has in-app navigation paths. |
-| OsmAnd Wikipedia external link | Pending. The same client handles external HTTP(S) separately. Test both the warning and any Android handoff afterward. |
+| OsmAnd Wikipedia external link | Pending. Accepting the warning invokes the same Custom Tabs helper. Test the warning and which activity Android launches afterward. [OsmAnd WikiArticleHelper](https://github.com/osmandapp/OsmAnd/blob/master/OsmAnd/src/net/osmand/plus/wikipedia/WikiArticleHelper.java#L108) |
 
 When testing on a real device, compare the same taps with Chrome, Firefox and a third browser. Use dummy URLs when recording ADB activity launches.
 
