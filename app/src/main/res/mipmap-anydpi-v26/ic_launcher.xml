@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/launcher_background" />
+    <foreground>
+        <!-- Preserve the artwork's own padding inside Android's 72dp mask. -->
+        <inset
+            android:drawable="@drawable/link_ferry_launcher_art"
+            android:inset="16.6667%" />
+    </foreground>
+</adaptive-icon>

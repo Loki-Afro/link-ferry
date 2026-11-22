@@ -4,7 +4,7 @@ LinkFerry opens ordinary web links in the Android browser you choose. It uses An
 
 ## Install and set up
 
-1. Download the debug APK and open it on your Android phone. If Android asks, allow the app that opened the APK to install unknown apps, then finish installation.
+1. Download the latest APK and open it on your Android phone. If Android asks, allow the app that opened the APK to install unknown apps, then finish installation. [GitHub Releases](https://github.com/Loki-Afro/link-ferry/releases/latest)
 2. Open **LinkFerry** and tap **Choose browser**. Select an installed browser such as Chrome or Firefox.
 3. Tap **Set as default browser** and confirm **LinkFerry** in Android’s prompt. You can also change this from Android’s **Settings → Apps → Default apps → Browser app**.
 4. Tap a web link in an app that hands the link to Android. If the preferred browser has been removed or disabled, LinkFerry lets you pick another browser for that link when one is available.
@@ -33,8 +33,8 @@ Gradle writes the installable debug APK to `app/build/outputs/apk/debug/app-debu
 **Android CI** builds, tests and lints pushes and pull requests targeting `main` and provides the APK under the run’s **Artifacts**. **APK release** publishes the tested APK on GitHub Releases when you push a version tag that matches `versionName` in `app/build.gradle.kts`.
 
 ```sh
-git tag v0.1.2
-git push origin v0.1.2
+git tag v0.1.3
+git push origin v0.1.3
 ```
 
 To sign releases with the same key, set the optional `ANDROID_DEBUG_KEYSTORE_BASE64` GitHub Actions secret to the base64-encoded Android debug keystore you use for those APKs. Android requires the same signing key for an in-place update. CI artifacts and releases without the secret use a fresh debug signing key.
