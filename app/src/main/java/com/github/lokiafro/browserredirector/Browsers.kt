@@ -20,10 +20,13 @@ internal class Browsers(private val context: Context) {
 
     @Suppress("DEPRECATION")
     fun installed(): List<Choice> {
+        // Android can limit a web query to the current default browser without MATCH_ALL.
+        val flags = PackageManager.MATCH_ALL or PackageManager.MATCH_DEFAULT_ONLY or
+            PackageManager.GET_RESOLVED_FILTER
         fun genericHandlers(scheme: String): Map<String, ResolveInfo> =
             context.packageManager.queryIntentActivities(
                 viewIntent(Uri.parse("$scheme://browser-redirector.invalid/")),
-                PackageManager.MATCH_DEFAULT_ONLY or PackageManager.GET_RESOLVED_FILTER
+                flags
             ).filter {
                 it.activityInfo.exported &&
                     it.activityInfo.packageName != context.packageName &&

@@ -25,6 +25,7 @@ Run with a second browser installed where the case calls for one. Use a test URL
 
 | Case | Steps and expected outcome |
 | --- | --- |
+| Browser discovery with a default set | Install Chrome, Firefox and DuckDuckGo in the same Android profile. Set Chrome as the system default, then open Redirector’s browser picker. All three browsers should appear. Repeat after setting Redirector as the system default and check that Redirector itself stays out of the picker. |
 | Onboarding | Pick a browser, agree to the Android role prompt, reopen Redirector and confirm both statuses. Repeat after declining the prompt and after changing the default in Android settings. |
 | Ordinary web link | Tap an HTTP URL and an HTTPS URL from a separate app. Verify the selected browser opens and receives the original path, query and fragment. Try a test URL containing an escaped slash and repeated query keys. |
 | Back and task navigation | Repeat with the browser cold, running and foregrounded. Open multiple distinct links. Check Back, Recents, and link delivery when Redirector is backgrounded. Try tapping a link after unlocking the phone. |
