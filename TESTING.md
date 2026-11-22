@@ -14,8 +14,10 @@ The manifest declares exported, browsable `ACTION_VIEW` handling for HTTP and HT
 | Android 12 | 31 | Device or emulator run pending |
 | Android 14 | 34 | Device or emulator run pending |
 | Android 15 | 35 | Device or emulator run pending |
-| Android 16 | 36 | Device or emulator run pending |
+| Android 16 | 36 | Emulator startup failed before APK installation. Device run pending. |
 | Android 17 | 37 | Device or emulator run pending |
+
+No physical Android device was connected. The Android 16 emulator ran in software mode and its system server watchdog stopped the first boot. The install attempt was rejected while Android was still booting.
 
 ## Manual test cases
 
