@@ -39,6 +39,10 @@ git push origin v0.1.1
 
 To sign releases with the same key, set the optional `ANDROID_DEBUG_KEYSTORE_BASE64` GitHub Actions secret to the base64-encoded Android debug keystore you use for those APKs. Android requires the same signing key for an in-place update. CI artifacts and releases without the secret use a fresh debug signing key.
 
+## License
+
+This project is licensed under the GNU Affero General Public License v3.0 only (AGPL-3.0-only). See [LICENSE](LICENSE).
+
 ## References
 
 - [Android role requests](https://developer.android.com/reference/android/app/role/RoleManager)
