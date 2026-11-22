@@ -28,6 +28,17 @@ Android matches manifest schemes case-sensitively, so link handling uses lowerca
 
 Gradle writes the installable debug APK to `app/build/outputs/apk/debug/app-debug.apk`. See the [test report](TESTING.md) for the Android version matrix and Signal and OsmAnd checks.
 
+## GitHub Actions
+
+**Android CI** builds, tests and lints pushes and pull requests targeting `main` and provides the APK under the run’s **Artifacts**. **APK release** publishes the tested APK on GitHub Releases when you push a version tag that matches `versionName` in `app/build.gradle.kts`.
+
+```sh
+git tag v0.1.1
+git push origin v0.1.1
+```
+
+To sign releases with the same key, set the optional `ANDROID_DEBUG_KEYSTORE_BASE64` GitHub Actions secret to the base64-encoded Android debug keystore you use for those APKs. Android requires the same signing key for an in-place update. CI artifacts and releases without the secret use a fresh debug signing key.
+
 ## References
 
 - [Android role requests](https://developer.android.com/reference/android/app/role/RoleManager)

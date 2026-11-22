@@ -1,0 +1,70 @@
+name: Android CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+  workflow_call:
+    secrets:
+      debug_keystore:
+        description: Base64-encoded Android debug keystore for APK updates
+        required: false
+    outputs:
+      version:
+        description: Version name in the built APK
+        value: ${{ jobs.build.outputs.version }}
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    outputs:
+      version: ${{ steps.package.outputs.version }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Install Android SDK packages
+        run: sdkmanager --install 'platforms;android-36' 'build-tools;36.0.0'
+
+      - name: Configure APK signing
+        if: github.ref_type == 'tag'
+        env:
+          DEBUG_KEYSTORE_BASE64: ${{ secrets.debug_keystore }}
+        run: |
+          if [[ -n "$DEBUG_KEYSTORE_BASE64" ]]; then
+            android_user_home="$RUNNER_TEMP/redirector-android"
+            install -d -m 700 "$android_user_home"
+            umask 077
+            printf '%s' "$DEBUG_KEYSTORE_BASE64" | base64 --decode > "$android_user_home/debug.keystore"
+            printf 'ANDROID_USER_HOME=%s\n' "$android_user_home" >> "$GITHUB_ENV"
+          fi
+
+      - name: Build, test and lint
+        run: ./gradlew --no-daemon :app:assembleDebug :app:testDebugUnitTest :app:lintDebug
+
+      - name: Verify APK and read version
+        id: package
+        run: |
+          output_dir=app/build/outputs/apk/debug
+          "$ANDROID_HOME/build-tools/36.0.0/apksigner" verify "$output_dir/app-debug.apk"
+          version=$(jq -er '.elements[] | select(.outputFile == "app-debug.apk") | .versionName' "$output_dir/output-metadata.json")
+          printf 'version=%s\n' "$version" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: browser-redirector-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
